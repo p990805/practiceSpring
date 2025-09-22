@@ -1,13 +1,13 @@
-package com.practice.practice;
+package com.hello.hello;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PracticeApplicationTests {
+class HelloApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }
