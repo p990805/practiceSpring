@@ -15,13 +15,26 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Member member = new Member();
-            member.setUserName("회원1");
+            Team team = new Team();
+            team.setName("TeamA");
+            // 이렇게 하면 member의 team이 null로 나옴 -> mappedBy로 되어있기 때문에
+//            team.getMembers().add(member);
+            em.persist(team);
 
-            System.out.println("persist 홏출 전 여기서 바로 IDENTITY 면 Insert 날라감");
+            Member member = new Member();
+            member.setUserName("member1");
+            member.setTeam(team);
             em.persist(member);
-            System.out.println("member.getId() = " + member.getId());
-            System.out.println("persist 호출 후 ");
+
+//            em.flush();
+//            em.clear();
+
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
+            for(Member member1 : members){
+                System.out.println("member1: " + member1.getUserName());
+            }
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
