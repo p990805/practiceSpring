@@ -31,10 +31,24 @@ public class JpaMain {
 //                .getResultList();
             Member member  = new Member();
             member.setUserName("hello");
-            member.setHomeAddress(new Address("city", "state", "country"));
-            member.setWorkPeriod(new Period());
+            member.setHomeAddress(new Address("homeCity", "state", "country"));
+
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
+
+            member.getAddressHistory().add(new Address("old1", "state", "country"));
+            member.getAddressHistory().add(new Address("old2", "state", "country"));
 
             em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            System.out.println("===========");
+            Member findMember = em.find(Member.class, member.getId());
+
+//            findMember.getHomeAddress().setCity("newCity");
 
             tx.commit();
         } catch (Exception e) {

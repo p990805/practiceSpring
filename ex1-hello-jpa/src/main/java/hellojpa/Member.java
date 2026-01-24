@@ -1,6 +1,8 @@
 package hellojpa;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -24,7 +26,9 @@ import jakarta.persistence.Transient;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 // 만약 테이블 이름이 달라야 한다면 이렇게 설정
@@ -70,6 +74,24 @@ public class Member extends BaseEntity {
     @Embedded
     private Address homeAddress;
 
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+
+    public List<Address> getAddressHistory() {
+        return addressHistory;
+    }
+
+
+    @ElementCollection
+    @CollectionTable(name = "ADDRESS", joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    private List<Address> addressHistory = new ArrayList<>();
 
     public Member(){
 
